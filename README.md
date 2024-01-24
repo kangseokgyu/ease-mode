@@ -1,1 +1,1 @@
-# ease_mode
+# ease-mode
