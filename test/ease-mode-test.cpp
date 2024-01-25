@@ -54,3 +54,18 @@ TEST(ease_mode_test, get_test) {
   auto res2 = m.change(test_mode::_2);
   EXPECT_EQ(test_mode::_2, m.get());
 }
+
+TEST(ease_mode_test, check_later_test) {
+  ease::mode_mt<test_mode> m;
+
+  {
+    auto checked = m.check();
+    EXPECT_FALSE(checked.first);
+  }
+
+  {
+    m.check_later();
+    auto checked = m.check();
+    EXPECT_TRUE(checked.first);
+  }
+}
