@@ -76,6 +76,15 @@ public:
   }
 
   /**
+   * @brief mode가 변경된 것을 나중에 확인하기 위해 상태를 변경한다.
+   *
+   */
+  void check_later() {
+    std::lock_guard<mutex_t> guard(*_m);
+    _changed = true;
+  }
+
+  /**
    * @brief 현재 모드를 가져온다.
    *
    * @return T 현재 모드
