@@ -33,6 +33,18 @@ public:
     return false;
   }
 
+  bool try_change(const T &t) {
+    std::unique_lock<mutex_t> guard(*_m, std::try_to_lock);
+    if (guard.owns_lock()) {
+      if (_cur_mode != t) {
+        _cur_mode = t;
+        _changed = true;
+        return true;
+      }
+    }
+    return false;
+  }
+
   std::pair<bool, T> check() {
     std::lock_guard<mutex_t> guard(*_m);
     if (_changed) {
