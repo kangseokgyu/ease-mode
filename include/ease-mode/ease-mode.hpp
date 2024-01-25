@@ -23,6 +23,13 @@ public:
   mode &operator=(const mode &other) = delete;
   mode &operator=(mode &&other) = delete;
 
+  /**
+   * @brief 모드를 변경한다.
+   *
+   * @param t 변경할 모드
+   * @return true 변경한 경우
+   * @return false 변경이 필요 없는 경우
+   */
   bool change(const T &t) {
     std::lock_guard<mutex_t> guard(*_m);
     if (_cur_mode != t) {
@@ -33,6 +40,14 @@ public:
     return false;
   }
 
+  /**
+   * @brief 모드를 변경한다.
+   * 락을 잡을 수 없는 경우 변경하지 않는다.
+   *
+   * @param t 변경할 모드
+   * @return true 변경에 성공한 경우
+   * @return false 변경하지 않았거나 락을 잡지 못한 경우
+   */
   bool try_change(const T &t) {
     std::unique_lock<mutex_t> guard(*_m, std::try_to_lock);
     if (guard.owns_lock()) {
@@ -45,6 +60,12 @@ public:
     return false;
   }
 
+  /**
+   * @brief 모드가 변경됐는지 확인한다.
+   *
+   * @return std::pair<bool, T> 변경된 모드이 있으면 true와 변경된 모드,
+   * 모드가 변경되지 않았으면 false와 현재 모드
+   */
   std::pair<bool, T> check() {
     std::lock_guard<mutex_t> guard(*_m);
     if (_changed) {
