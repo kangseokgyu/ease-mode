@@ -75,6 +75,16 @@ public:
     return std::make_pair(false, _cur_mode);
   }
 
+  /**
+   * @brief 현재 모드를 가져온다.
+   *
+   * @return T 현재 모드
+   */
+  T get() {
+    std::lock_guard<mutex_t> guard(*_m);
+    return _cur_mode;
+  }
+
 private:
   std::unique_ptr<mutex_t> _m;
   bool _changed = false;
