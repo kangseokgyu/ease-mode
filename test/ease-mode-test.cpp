@@ -69,3 +69,19 @@ TEST(ease_mode_test, check_later_test) {
     EXPECT_TRUE(checked.first);
   }
 }
+
+TEST(ease_mode_test, set_apply_fn_test) {
+  ease::mode_mt<test_mode> m;
+  auto fn1 = []() { return true; };
+  auto fn2 = []() { return true; };
+
+  m.set_apply_fn(test_mode::_1, fn1);
+  m.set_apply_fn(test_mode::_2, fn2);
+
+  EXPECT_FALSE(m.apply());
+
+  m.change(test_mode::_2);
+  EXPECT_TRUE(m.apply());
+  m.change(test_mode::_1);
+  EXPECT_TRUE(m.apply());
+}

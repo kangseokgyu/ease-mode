@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <memory>
 #include <mutex>
 #include <utility>
@@ -92,10 +93,21 @@ public:
     return _cur_mode;
   }
 
+  void set_apply_fn(const T &m, std::function<bool()> fn) { _apply_fn[m] = fn; }
+
+  bool apply() {
+    auto c = check();
+    if (c.first) {
+      return _apply_fn[c.second]();
+    }
+    return false;
+  }
+
 private:
   std::unique_ptr<mutex_t> _m;
   bool _changed = false;
   T _cur_mode = T::defval;
+  std::map<T, std::function<bool()>> _apply_fn;
 };
 
 template <class T> //
