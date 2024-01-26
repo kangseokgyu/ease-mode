@@ -48,10 +48,10 @@ TEST(ease_mode_test, get_test) {
   ease::mode_mt<test_mode> m;
   EXPECT_EQ(test_mode::defval, m.get());
 
-  auto res1 = m.change(test_mode::_2);
+  m.change(test_mode::_2);
   EXPECT_EQ(test_mode::_2, m.get());
 
-  auto res2 = m.change(test_mode::_2);
+  m.change(test_mode::_2);
   EXPECT_EQ(test_mode::_2, m.get());
 }
 

@@ -1,9 +1,7 @@
 #pragma once
 
-#include <chrono>
 #include <memory>
 #include <mutex>
-#include <thread>
 #include <utility>
 
 #include "ease-mode/details/mutex.hpp"
