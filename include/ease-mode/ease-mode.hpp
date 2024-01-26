@@ -93,8 +93,20 @@ public:
     return _cur_mode;
   }
 
+  /**
+   * @brief Set the apply fn object
+   *
+   * @param m 모드 선택
+   * @param fn 모드 변경 함수
+   */
   void set_apply_fn(const T &m, std::function<bool()> fn) { _apply_fn[m] = fn; }
 
+  /**
+   * @brief 모드를 변경할 함수를 실행한다.
+   *
+   * @return true 성공적으로 모드를 변경한 경우
+   * @return false 변경 실패, 변경점 없음
+   */
   bool apply() {
     auto c = check();
     if (c.first) {
